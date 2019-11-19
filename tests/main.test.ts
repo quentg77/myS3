@@ -1,5 +1,5 @@
 import {app} from '../src/server'
-import * as supertest from 'supertest'
+import supertest from 'supertest'
 
 const server = supertest(app);
 

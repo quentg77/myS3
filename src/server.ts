@@ -1,4 +1,4 @@
 import express from "express";
-export const app = express()
+export const app = express();
 
-app.get('/', (req, res) => res.end('Hello World!'))
+app.get("/", (req, res) => res.end("Hello World!"));

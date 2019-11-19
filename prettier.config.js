@@ -6,9 +6,9 @@ module.exports = {
   // indent lines with tabs instead of spaces.
   useTabs: true,
   // print semicolons at the ends of statements
-  semi: false,
+  semi: true,
   // use single quotes instead of double quotes
-  singleQuote: true,
+  singleQuote: false,
   // print trailing commas wherever possible when multi-line
   trailingComma: 'all',
   // print spaces between brackets in object literals

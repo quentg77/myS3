@@ -1,14 +1,12 @@
-import { helloWorld, devNull } from '../src/main'
-import { expect } from 'chai'
+import {app} from '../src/server'
+import supertest from 'supertest'
 
-describe(':: helloWorld', (): void => {
-  it('helloWorld("Elixir")', () => {
-    expect(helloWorld('Elixir')).equal(`🦁 I love Elixir!`)
-  })
-})
+const server = supertest(app);
 
-describe(':: devNull', (): void => {
-  it('devNull()', () => {
-    expect(devNull()).eql({ hello: 'Efrei' })
-  })
+describe('Get root', () => {
+	it('simple get', async (done) => {
+		const res = await server.get('/');
+		expect(res.status).toBe(200);
+		done();
+	})
 })

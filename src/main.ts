@@ -1,10 +1,5 @@
-export function helloWorld(lang = 'Typescript'): string {
-	return `🦁 I love ${lang}!`
-}
+import { app } from './server'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function devNull(): any {
-	return { hello: 'Efrei' }
-}
+const port = 3000
 
-console.log(helloWorld())
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))

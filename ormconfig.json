@@ -4,7 +4,7 @@
    "port": 5432,
    "username": "admin",
    "password": "admin",
-   "database": "test",
+   "database": "myS3",
    "synchronize": true,
    "logging": false,
    "entities": [

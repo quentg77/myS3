@@ -1,16 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { Length, IsNotEmpty, IsEmail } from "class-validator";
 
 @Entity()
 export class User {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryGeneratedColumn("uuid")
+	uuid!: number;
 
-	@Column("text")
-	firstName: string;
+	@Column("text", { nullable: true })
+	@IsNotEmpty()
+	nickname!: string;
 
-	@Column("text")
-	lastName: string;
+	@Column("text", { nullable: true })
+	@IsNotEmpty()
+	@IsEmail()
+	email!: string;
 
-	@Column("text")
-	age: number;
+	@Column("text", { nullable: true })
+	@Length(4, 20)
+	@IsNotEmpty()
+	password!: string;
 }

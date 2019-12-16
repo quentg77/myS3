@@ -1,61 +1,30 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
-import * as bodyParser from "body-parser";
-import { Request, Response, Application } from "express";
-import { Routes } from "./routes";
+import { createConnection, getRepository } from "typeorm";
 import { User } from "./entity/User";
-import { app } from "./server";
-import { UserController } from "./controller/UserController";
+import app from "./server";
 
 createConnection()
 	.then(async connection => {
 		// create express app
-		app.use(bodyParser.json());
-
-		// register express routes from defined application routes
-		Routes.forEach(route => {
-			(app as Application)[route.method](
-				route.route,
-				(req: Request, res: Response, next: Function) => {
-					const result = new (route.controller as typeof UserController)()[
-						route.action
-					](req, res, next);
-					if (result instanceof Promise) {
-						result.then(result =>
-							result !== null && result !== undefined
-								? res.send(result)
-								: undefined,
-						);
-					} else if (result !== null && result !== undefined) {
-						res.json(result);
-					}
-				},
-			);
-		});
-
-		// setup express app here
-		// ...
 		const port = 3000;
 		app.listen(port, () =>
 			console.log(`Example app listening on port ${port}!`),
 		);
 
 		// insert new users for test
-		await connection.manager.save(
-			connection.manager.create(User, {
-				firstName: "Timber",
-				lastName: "Saw",
-				age: 27,
-			}),
-		);
-		await connection.manager.save(
-			connection.manager.create(User, {
-				firstName: "Phantom",
-				lastName: "Assassin",
-				age: 24,
-			}),
-		);
+		const userRepository = getRepository(User);
+		const quentinUser = await userRepository.findOne({
+			nickname: "quentin",
+		});
 
-		//console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
+		if (!quentinUser) {
+			await connection.manager.save(
+				connection.manager.create(User, {
+					nickname: "quentin",
+					email: "q.guichaoua@gmail.com",
+					password: "toto",
+				}),
+			);
+		}
 	})
 	.catch(error => console.log(error));
